@@ -1,115 +1,115 @@
 # Address Book Management System
 
-A menu-driven, console-based Address Book application written in C. It allows users to add, view, search, edit, and delete contacts, with contact information stored in a CSV file for persistence between runs.
+A menu-driven, terminal-based Address Book Management System developed in C. It manages contact records and stores them in a CSV file so that saved contacts can be loaded again when the program starts.
 
 ## Features
 
-- Add a contact with a name, phone number, and email address
-- View all saved contacts
-- Search for a contact by exact name
-- Edit the phone number and email address of an existing contact
-- Delete a contact by name
-- Load saved contacts when the program starts
-- Save contact data to `contacts.csv`
-
-## Technologies and Concepts
-
-- C programming
-- Structures and fixed-size arrays
-- Functions and modular programming
-- Header files
-- String handling
-- File handling using standard C I/O
-- CSV-based data storage
-- CRUD operations (Create, Read, Update, Delete)
+- Create contacts with a name, phone number, and email address
+- Validate name, phone number, and email input
+- Check for duplicate phone numbers and email addresses
+- Search contacts by name, phone number, or email address
+- Edit a contact's name, phone number, or email address
+- Delete contacts after confirmation
+- List contacts sorted by name, phone number, or email address
+- Load and save contacts using a CSV file
+- Menu-driven interface with terminal colour output
 
 ## Project Structure
 
 ```text
 Adress-Book/
 ├── main.c
-├── contacts.c
-├── contacts.h
+├── contact.c
+├── contact.h
+├── file.c
+├── file.h
+├── contacts.csv
 └── README.md
 ```
 
-## Build
+## Technologies and Concepts
 
-Compile the source files with GCC:
+- C programming
+- Structures and fixed-size arrays
+- Modular programming with source and header files
+- String handling and input validation
+- Searching and sorting
+- File handling using standard C I/O
+- CSV-based persistent storage
+
+## Compilation
+
+Compile the project using GCC:
 
 ```bash
-gcc main.c contacts.c -o addressbook
+gcc main.c contact.c file.c -o addressbook
 ```
 
-On Windows, you can create an executable named `addressbook.exe`:
-
-```powershell
-gcc main.c contacts.c -o addressbook.exe
-```
+The program uses `unistd.h` and `usleep()` for the exit animation, so the supplied source is intended for Linux/Unix-like environments.
 
 ## Run
-
-Linux/macOS:
 
 ```bash
 ./addressbook
 ```
 
-Windows PowerShell:
+Run the executable from the project directory so that it can read and write `contacts.csv`.
 
-```powershell
-.\addressbook.exe
-```
-
-## Menu
-
-When the program starts, it loads contact records from `contacts.csv` in the current working directory (if the file exists), then displays this menu:
+## Program Menu
 
 ```text
-1. Add
-2. View
-3. Search
-4. Edit
-5. Delete
+1. Create contact
+2. Search contact
+3. Edit contact
+4. Delete contact
+5. List all contacts
 6. Exit
 ```
 
-Choose an option and follow the prompts.
+## Contact Fields
+
+Each contact contains:
+
+- Name
+- Phone number
+- Email address
+
+## Input Validation
+
+The program applies the following checks:
+
+- Names must contain at least four characters, start with a non-digit, and contain only alphabetic characters and spaces.
+- Phone numbers must contain ten digits and start with a digit from 6 to 9.
+- Email addresses must be lowercase, start with an alphabetic character, contain one `@` and one `.`, and end with `.com`. The domain portion between `@` and `.` is restricted to alphabets.
+- Duplicate phone numbers and email addresses are rejected.
+
+## Search, Edit, Delete, and Sorting
+
+Contacts can be searched using an exact name, phone number, or email address. Search results are stored by index so that the selected record can be edited or deleted. Editing supports all three contact fields. The list operation offers sorting by name, phone number, or email address.
 
 ## Data Storage
 
-The application stores contacts in a comma-separated file named `contacts.csv`. Each record contains:
+Contact records are stored in `contacts.csv`. The file begins with a record count in the form `#N`, followed by one comma-separated record per line:
 
 ```text
-name,phone,email
+#1
+John,9876543210,john@example.com
 ```
 
-Example:
+The repository's CSV file is initialized with `#0` so it contains no personal contact records. New contacts are written when the program exits.
 
-```text
-John Doe,9876543210,john@example.com
-Jane Smith,9123456789,jane@gmail.com
-```
+## Current Implementation Notes
 
-The file is created or rewritten when contacts are saved. Existing records are loaded at startup.
-
-## Implementation Notes
-
-- Contact records are represented by a `struct Contact` containing fixed-size character arrays for the name, phone number, and email.
-- The application stores up to 100 contacts in a fixed-size array.
-- Contact lookup uses an exact, case-sensitive name match.
-- Editing changes the phone number and email address; the name remains unchanged.
-- Deleting a contact shifts later array entries to fill the removed position.
-- The current CSV read/write implementation expects simple comma-separated fields. Names, phone numbers, and email addresses containing commas are not supported.
-
-## Current Limitations
-
-- The contact array has a fixed capacity of 100 entries.
-- Duplicate names are not checked, and name-based search/edit/delete act on the first exact match.
-- Phone numbers and email addresses are not validated.
-- CSV fields are not escaped, so commas within fields are unsupported.
-- The program uses basic console input and does not include a graphical interface.
+- The address book uses a fixed array with a maximum capacity of 100 contacts.
+- Search uses exact string matching.
+- CSV fields are comma-separated and are not escaped.
+- The input validation rules are intentionally simple and are not a complete validation of every possible real-world name, phone number, or email address.
+- The exit animation uses `usleep()`, which is POSIX-specific.
 
 ## Author
 
-Deekshith
+**Deekshith**  
+BE Electronics Engineering  
+Nitte Meenakshi Institute of Technology
+
+GitHub: https://github.com/deekshith5353
