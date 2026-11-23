@@ -228,7 +228,7 @@ void listContacts(AddressBook *addressBook)
     case 3:
         printf("Sorting by email : \n");
         for (int i = 0; i < addressBook->contactCount - 1; i++)
-            for (int j = 0; j < addressBook->contactCount - j - 1; j++)
+            for (int j = 0; j < addressBook->contactCount - i - 1; j++)
                 if (strcmp(addressBook->contacts[j].email, addressBook->contacts[j + 1].email) > 0) {
                     Contact temp = addressBook->contacts[j];
                     addressBook->contacts[j] = addressBook->contacts[j + 1];
