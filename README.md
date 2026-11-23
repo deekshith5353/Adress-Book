@@ -1,79 +1,87 @@
 # Address Book Management System
 
-## Overview
-
-The Address Book Management System is a console-based application developed in C for managing contact information. It provides essential contact management operations including adding, viewing, searching, editing, and deleting records. Contact data is stored in a CSV file, ensuring persistence across program executions.
-
----
+A menu-driven, console-based Address Book application written in C. It allows users to add, view, search, edit, and delete contacts, with contact information stored in a CSV file for persistence between runs.
 
 ## Features
 
-* Add new contacts
-* View all saved contacts
-* Search contacts by name
-* Edit existing contact details
-* Delete contacts
-* Automatic data saving
-* Load contacts from a CSV file at startup
+- Add a contact with a name, phone number, and email address
+- View all saved contacts
+- Search for a contact by exact name
+- Edit the phone number and email address of an existing contact
+- Delete a contact by name
+- Load saved contacts when the program starts
+- Save contact data to `contacts.csv`
 
----
+## Technologies and Concepts
 
-## Technologies Used
-
-* C Programming Language
-* GCC Compiler
-* File Handling
-* Structures
-* Modular Programming
-* CSV File Storage
-* Makefile
-
----
+- C programming
+- Structures and fixed-size arrays
+- Functions and modular programming
+- Header files
+- String handling
+- File handling using standard C I/O
+- CSV-based data storage
+- CRUD operations (Create, Read, Update, Delete)
 
 ## Project Structure
 
 ```text
-AddressBook/
-│── main.c
-│── contacts.c
-│── contacts.h
-│── contacts.csv
-│── Makefile
-│── README.md
+Adress-Book/
+├── main.c
+├── contacts.c
+├── contacts.h
+└── README.md
 ```
 
----
+## Build
 
-## Functional Modules
+Compile the source files with GCC:
 
-### Add Contact
+```bash
+gcc main.c contacts.c -o addressbook
+```
 
-Stores a new contact by accepting the user's name, phone number, and email address.
+On Windows, you can create an executable named `addressbook.exe`:
 
-### View Contacts
+```powershell
+gcc main.c contacts.c -o addressbook.exe
+```
 
-Displays all contacts stored in the address book.
+## Run
 
-### Search Contact
+Linux/macOS:
 
-Searches for a contact using the contact name.
+```bash
+./addressbook
+```
 
-### Edit Contact
+Windows PowerShell:
 
-Updates the phone number and email address of an existing contact.
+```powershell
+.\addressbook.exe
+```
 
-### Delete Contact
+## Menu
 
-Removes a contact permanently from the address book.
+When the program starts, it loads contact records from `contacts.csv` in the current working directory (if the file exists), then displays this menu:
 
----
+```text
+1. Add
+2. View
+3. Search
+4. Edit
+5. Delete
+6. Exit
+```
+
+Choose an option and follow the prompts.
 
 ## Data Storage
 
-All contact information is stored in a CSV file using the following format:
+The application stores contacts in a comma-separated file named `contacts.csv`. Each record contains:
 
 ```text
-Name,Phone,Email
+name,phone,email
 ```
 
 Example:
@@ -83,79 +91,25 @@ John Doe,9876543210,john@example.com
 Jane Smith,9123456789,jane@gmail.com
 ```
 
----
+The file is created or rewritten when contacts are saved. Existing records are loaded at startup.
 
-## Building the Project
+## Implementation Notes
 
-Compile using the provided Makefile:
+- Contact records are represented by a `struct Contact` containing fixed-size character arrays for the name, phone number, and email.
+- The application stores up to 100 contacts in a fixed-size array.
+- Contact lookup uses an exact, case-sensitive name match.
+- Editing changes the phone number and email address; the name remains unchanged.
+- Deleting a contact shifts later array entries to fill the removed position.
+- The current CSV read/write implementation expects simple comma-separated fields. Names, phone numbers, and email addresses containing commas are not supported.
 
-```bash
-make
-```
+## Current Limitations
 
-Alternatively, compile manually:
-
-```bash
-gcc main.c contacts.c -o addressbook
-```
-
----
-
-## Running the Application
-
-Linux/macOS
-
-```bash
-./addressbook
-```
-
-Windows
-
-```bash
-addressbook.exe
-```
-
----
-
-## Menu Options
-
-```text
-1. Add Contact
-2. View Contacts
-3. Search Contact
-4. Edit Contact
-5. Delete Contact
-6. Exit
-```
-
----
-
-## Concepts Demonstrated
-
-* Structures
-* Arrays
-* File Handling
-* Modular Programming
-* Header Files
-* String Manipulation
-* CRUD Operations
-* CSV Data Management
-
----
-
-## Future Enhancements
-
-* Input validation for phone numbers and email addresses
-* Duplicate contact detection
-* Contact sorting
-* Search by phone number or email
-* Password-protected access
-* Dynamic memory allocation
-* Improved terminal interface
-
----
+- The contact array has a fixed capacity of 100 entries.
+- Duplicate names are not checked, and name-based search/edit/delete act on the first exact match.
+- Phone numbers and email addresses are not validated.
+- CSV fields are not escaped, so commas within fields are unsupported.
+- The program uses basic console input and does not include a graphical interface.
 
 ## Author
 
-**Deekshith**
-
+Deekshith
